@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+    <link rel="manifest" href="manifest.json">
+    <!--<link href="lib/ionic/css/ionic.css" rel="stylesheet">-->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/splashscreen.css" rel="stylesheet">
+    <link href="css/modalError.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <!-- ionic/angularjs js -->
+    <!--<script src="lib/ionic/js/ionic.bundle.js"></script>-->
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="js/refresh_token.js"></script>
+    <script src="js/tryNetwork.js"></script>
+    <script src="js/modalError.js"></script>
+    <!--<script src="js/session.js"></script>-->
+    <script src="js/index.js"></script>
+    <!--<script type="text/javascript" charset="utf-8">
+
+      document.addEventListener("deviceready", onDeviceReady, false);
+
+    // device APIs are available
+    //
+    function onDeviceReady() {
+        checkConnection();
+    }
+
+        function checkConnection() {
+            var networkState = navigator.connection.type;
+
+            var states = {};
+            states[Connection.UNKNOWN]  = 'Unknown connection';
+            states[Connection.ETHERNET] = 'Ethernet connection';
+            states[Connection.WIFI]     = 'WiFi connection';
+            states[Connection.CELL_2G]  = 'Cell 2G connection';
+            states[Connection.CELL_3G]  = 'Cell 3G connection';
+            states[Connection.CELL_4G]  = 'Cell 4G connection';
+            states[Connection.CELL]     = 'Cell generic connection';
+            states[Connection.NONE]     = 'No network connection';
+
+            console.log('Connection type: ' + states[networkState]);
+        }
+
+    </script>-->
+  </head>
+  <body>
+      <div class='pin'></div>
+      <div id="myModal" class="modalError">
+        <div class="modalError-content">
+          <p><center>Aucune connexion détecter</center></p>
+          <p><center>Veuillez activer internet et appuyer sur rafraîchir</center></p>
+          <center><button onclick="refresh()">Rafraichir</button></center>
+        </div>
+      </div>
+      <div id="myModalLocation" class="modalError">
+        <div class="modalError-content">
+            <div id="switch"></div>
+            <center><img src="img/no-location.png" /></center>
+            <center>Activer votre position</center>
+            <center>Pour le bon fonctionnement de cette application vous devez acceptés d'être géolocaliser.</center><br /><br >
+            <center>
+            <div class="actionButton" onclick="goParameters()">
+                Paramètres
+            </div>
+            <div class="actionButton" onclick="goRefresh()">
+                Rafraichir
+            </div>
+            </center>
+        </div>
+      </div>
+      <script>
+        //window.localStorage.setItem('session', 0);
+        checkInternet();
+        var status = window.localStorage.getItem('checkInternet');
+        if (status == "false") {
+            var modal = document.getElementById('myModal');
+            modal.style.display = "block";
+            function refresh() {
+                document.location.href="index.html"; 
+            }
+        } else if (status == "true") {
+            var now = new Date();
+            var h = now.getHours();
+            var min = now.getMinutes();
+            if (h < 10) {
+                h = '0' + h;
+            }
+            if (min < 10) {
+                min = '0' + min;
+            }
+            var time = h + ':' + min;
+            var endTime = window.localStorage.getItem('endsToken/time');
+            //console.log("time = ", time);
+            
+            if (time == endTime || time > endTime) {
+                console.log("token invalide");
+            }
+            var session = window.localStorage.getItem('session');
+            function log(msg){
+                console.log(msg);
+                document.body.innerHTML += '<p>'+msg+'</p>';
+            }
+           // log("session = ");
+            //log(session);
+            if (session == null || session == 0) {
+               //document.addEventListener("deviceready", onReady, false);
+                console.log("session a null");
+                window.setTimeout("location=('templates/login.html');", 3000);
+            } else {
+                window.setTimeout("location=('templates/home.html');", 3000);
+            }
+        }
+        var refreshUsed = window.localStorage.getItem('endsToken/refreshUsed');
+        if (refreshUsed == 1) {
+            if (time >= endTime) {
+                refresh_token();
+            }  
+        }
+        if (time >= endTime) {
+            var now = new Date();
+            var h = now.getHours();
+            var min = now.getMinutes();
+            h = h + 1;
+            if (h >= 24) {
+                h = '0';
+            }
+            if (h < 10) {
+                h = '0' + h;
+            }
+            if (min < 10) {
+                min = '0' + min; 
+            }
+            var time = h + ':' + min;
+            //console.log("token périmé");
+            window.localStorage.setItem('endsToken/refreshUsed', '1');
+            window.localStorage.setItem('endsToken/time', time);
+            var refreshToken = window.localStorage.getItem("login/refresh_token");
+            window.localStorage.setItem('login/access_token', refreshToken);
+        }
+      //document.addEventListener("deviceready", onReady, false);
+      </script>
+  </body>
+</html>
+

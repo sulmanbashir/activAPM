@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <link href="../manifest.json" rel="manifest">
+    <link href="../css/redirect.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        $.ajax({
+           type: 'GET',
+           async: true,
+           crossDomain: true,
+           url: "https://www.sidonie-dev.com/rencontres/wsm/utilisateur_profil/" + window.localStorage.getItem('user/id'),
+           processData: true,
+           headers: {
+            "authorization": "Basic YXBtdXNlcjpzMWQwbmlFKg==",
+            "cache-control": "no-cache",
+          },
+           data: {token: window.localStorage.getItem('login/access_token')},
+           dataType: "json",
+           success: function (data) {
+               var reponse = JSON.stringify(data);
+               var p = JSON.parse(reponse);
+              // $('#show-data').append("\n", reponse);
+               window.localStorage.setItem('user/last_name', p.donnees.membre_nom);
+               window.localStorage.setItem('user/first_name', p.donnees.membre_prenom);
+               window.localStorage.setItem('user/photo', p.donnees.membre_photo);
+               //window.localStorage.setItem('user/age', p.donnees.age);
+               window.localStorage.setItem('user/entreprise', p.donnees.entreprise);
+               window.localStorage.setItem('user/fonction', p.donnees.fonction);//fonction
+               window.localStorage.setItem('user/secteur_activite', p.donnees.secteur_activite);
+/*a voir*/     //window.localStorage.setItem('user/telephone', p.donnees.telephone);
+/*a voir*/     //window.localStorage.setItem('user/mobile', p.donnees.mobile);
+               window.localStorage.setItem('user/email', p.donnees.email);
+               //window.localStorage.setItem('user/club/name', p.donnees.clubs.club);
+               //window.localStorage.setItem('user/club/longitude', p.donnees.clubs.longitude);
+               //window.localStorage.setItem('user/club/latitude', p.donnees.clubs.latitude);
+               window.localStorage.setItem('user/describe', p.donnees.entreprise_description);
+           }
+        });
+        var firstTime = window.localStorage.getItem('firstUse');
+        if (firstTime == 0) {
+            window.localStorage.setItem('firstUse', '1');
+             window.setTimeout("location=('../onboarding.html');", 1000);
+        } else {
+        window.setTimeout("location=('home.html');", 3000);
+        }
+    </script>
+  </head>
+  <body>
+    <div class="loader">Chargement..</div>
+  </body>
+</html>

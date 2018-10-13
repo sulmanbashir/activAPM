@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+		<title>Activ'</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="../js/tryNetwork.js"></script>
+        <script type="text/javascript" src="../js/sidemenu.js"></script>
+        <script type="text/javascript" src="../js/filter_modal.js"></script>
+        <script type="text/javascript" src="../js/getPosition.js"></script>
+        <script type="text/javascript" src="../js/app.js"></script>
+        <script type="text/javascript" src="../js/clean_home.js"></script>
+        <script type="text/javascript" src="../js/modalError.js"></script>
+        <script type="text/javascript" src="../js/home_functions.js"></script>
+        <script type="text/javascript" src="../js/index.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"><!--important-->
+        <link rel='stylesheet' href='../css/sidemenu.css' type='text/css' media='all'>
+        <link rel="manifest" href="../manifest.json">
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
+		<link rel="stylesheet" type="text/css" href="../css/modalError.css">
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700|Open+Sans:700' rel='stylesheet' type='text/css'>
+	</head>
+    <div class="headerMap">
+        <div id="settings"><img src="../img/controls.png" onclick="location.href='settings.html'"></div>
+        <div class="profils_miniature"><img src="../img/user.png" onclick="location.href='profils.html'"/></div>
+    </div>
+	<body onload="onLoading()">
+        <div id="show-data"></div>
+        <div id="modalNoGeoloc" class="modalNoGeoloc">
+            <div class="modalNoGeoloc-content">
+                <p><center>Aucune position détectés</center></p>
+                <p><center>Vous devez accepter d'être géolocalisés</center></p>
+                <p><center>Paramètre / Applications / Autorisations / Position</center></p>
+                <center><button onclick="refreshPage()">Rafraichir</button></center>
+            </div>
+        </div>
+        <div id="modalResult" class="modalResult">
+            <div class="modalResult-content">
+               <div id="modalResultMsg"></div>
+                <div class="sk-cube-grid">
+                  <div class="sk-cube sk-cube1"></div>
+                  <div class="sk-cube sk-cube2"></div>
+                  <div class="sk-cube sk-cube3"></div>
+                  <div class="sk-cube sk-cube4"></div>
+                  <div class="sk-cube sk-cube5"></div>
+                  <div class="sk-cube sk-cube6"></div>
+                  <div class="sk-cube sk-cube7"></div>
+                  <div class="sk-cube sk-cube8"></div>
+                  <div class="sk-cube sk-cube9"></div>
+                </div>
+            </div>
+        </div>
+        <div id="content-wrap">
+            <div class="container">
+                <div id="Alert"></div>
+                <div id="test"></div>
+                <div id="userFound"></div>
+                <div id="noUsersFound"></div>
+            </div>
+            <div class="separation"></div>
+        </div>
+        <div class="footer_map">
+            <center>
+                <div class="actionButton" onclick="onclickButtonGeoloc()">
+                    <img src="../img/gps-location.png">&nbsp;Géolocalisation
+                </div>
+                <div class="actionButton" onclick="onclickButtonCalendar()">
+                    <img src="../img/airplane-shape.png">&nbsp;Planification
+                </div>
+            </center>
+        </div>
+	</body>
+</html>

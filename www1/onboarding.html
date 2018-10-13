@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <title>Onboarding</title>
+    <link rel="manifest" href="manifest.json">
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/onboarding.css" rel="stylesheet">
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/onboarding.js"></script>
+    <script src="js/sendKeywords.js"></script>
+  </head>
+  <body>
+    <button class='open-walkthrough' onclick="location=('templates/redirection.html');">Commencer</button>
+      <div class='walkthrough show reveal'>
+      <div class='walkthrough-pagination'>
+        <a class='dot active'></a>
+        <a class='dot'></a>
+        <a class='dot'></a> 
+        <a class='dot'></a>
+        <a class='dot'></a>
+        <a class='dot'></a>
+      </div>
+  <div class='walkthrough-body'>
+    <ul class='screens animate'>
+      <li class='screen active'>
+        <div class='media logo'>
+          <img class='logo' src='img/smartphone.png'>
+        </div>
+        <h3>
+          01. Le but de l'application
+        </h3>
+        <p>Bienvenue dans l'application activ'Apm. Seuls les adhérents du réseau Apm ont accès à ce service. Cette application va vous permettre de rencontrer d'autres dirigeants Apm par le biais de la géolocalisation.</p>
+      </li>
+      <li class='screen'>
+        <div class='media logo'>
+          <img class='logo' src='img/charte.png'>
+        </div>
+        <h3>
+          02. La charte d'utilisation
+        </h3>
+        <p>Activ'Apm reste fidèle aux fondamentaux du réseau : ne pas être un réseau d'affaires. Les rencontres provoquée par activ'Apm doivent être basées sur les échanges entre pairs et le partage d'expérience.</p>
+      </li>
+      <li class='screen'>
+        <div class='media logo'>
+          <img class='logo' src='img/map-position.png'>
+        </div>
+        <h3>
+          03. La géolocalisation 
+        </h3>
+        <p>Par défaut, vous êtes invisible du réseau sur l'application. Pour vous rendre visible et signaler votre disponibilité aux dirigeants Apm autour de vous, il vous suffira de cliquer sur "Géolocalisation". Les dirigeants dans le rayon proche seront avertis et pourront prendre contact avec vous.</p>
+      </li>
+      <li class='screen'>
+        <div class='media logo'>
+          <img class='logo' src='img/event.png'>
+        </div>
+        <h3>
+          04. La planification
+        </h3>
+        <p>Si vous souhaitez rencontrer des dirigeants Apm lors d'un prochaine déplacement, il vous suffit de planifier votre voyage et de donner les dates où vous serez présent dans la ville de votre rendez-vous. Les dirigeants de cette ville seront avertis et pourront prendre contact avec vous.</p>
+      </li>
+      <li class='screen'>
+        <div class='media logo'>
+          <img class='logo' src='img/users.png'>
+        </div>
+        <h3>
+          05. Le profil
+        </h3>
+        <p>Sur votre profil vous pouvez ajoutez des éléments pour donner envie de vous contacter. N'hésitez pas à mettre vos enjeux du moments, votre parcours, vos passions.</p>
+      </li>
+      <li class='screen'>
+        <br />
+        <h3><center>06. Mots clés</center></h3>
+        <p>Choisissez 3 mots clés qui vous correspondent. Ces mots clés pourront être modifier à tout moment depuis votre profils.</p>
+        <p>
+            <font color="orange">(15 lettres maximum par mots)</font>
+            <input id="aboutme-1" onchange="run1()"maxlength="15" size="10"/><br />
+            <input id="aboutme-2" onchange="run2()"maxlength="15" size="10"/><br />
+            <input id="aboutme-3" onchange="run3()"maxlength="15" size="10"/>
+        </p>
+      </li>
+    </ul>
+    <button class='prev-screen'>
+      <i class='icon-angle-left'></i>
+    </button>
+    <button class='next-screen'>
+      <i class='icon-angle-right'></i>
+    </button>
+  </div>
+  <div class='walkthrough-footer'>
+    <button class='button next-screen'>Suivant</button>
+    <button class='button finish close' disabled='true'>Fin</button>
+  </div>
+<script>
+function run1() {
+    var val = document.getElementById("aboutme-1").value;
+    window.localStorage.setItem('user/aboutme1', val);
+    sendKeywords("aboutme-1", val, "insert");
+}
+
+function run2() {
+    var val = document.getElementById("aboutme-2").value;
+    window.localStorage.setItem('user/aboutme2', val);
+    sendKeywords("aboutme-2", val, "insert");
+}
+
+function run3() {
+    var val = document.getElementById("aboutme-3").value;
+    window.localStorage.setItem('user/aboutme3', val);
+    sendKeywords("aboutme-3", val, "insert");
+}
+</script>
+  </body>
+</html>

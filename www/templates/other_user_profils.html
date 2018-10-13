@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+		<title>Activ'</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"><!--important-->
+		<link rel='stylesheet' id='camera-css'  href='../css/camera.css' type='text/css' media='all'><!-- a supprimer ou commenter-->
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700|Open+Sans:700' rel='stylesheet' type='text/css'>
+        <link rel="manifest" href="../manifest.json">
+
+		<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.easing.1.3.js"></script>
+		<script type="text/javascript" src="../js/send_message.js"></script>
+        <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBGqZcyaOk8PwA8hkSwoB0eYxNXZtWDluY'></script>
+	</head>
+	<body ng-app="starter" class="profils_background">
+    <div class="content-wrap">
+    <div class="content">
+
+    <div id="home">
+       <div class="headerLine">
+           <a href="javascript:history.go(-2)"><img src="../img/left-arrow.png" /></a>
+		<div class="container">
+			<div class="row wrap">
+				<div class="col-md-12 gallery">
+                        <div id="cover-text">
+                            <h2 id="fullname"></h2>
+                            <div class="quality_section">
+                              <a class="quality">Sociable</a>
+                              <a class="quality">Sportif</a>
+                              <a class="quality">Solitaire</a>
+                            </div>
+                            <p id="entreprise"></p>
+                            <p>Paris Batignolle</p>
+                        </div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+    <!--<div class="profils_image" style="background:url(../img/picAbout/test.jpg) no-repeat"></div>-->
+    <div class="profils_image" style="background:url(../img/photo_test.jpg) no-repeat;background-size:contain;"></div>
+    <button id="message" onclick="send_message()" class="butt_messenger" style="background:url(../img/email.png)"></button>
+        <!--<div class="status_locate">Disponible jusqu'à 19H à Paris</div>-->
+        <div class="container">
+            <div class="box shadow_box">
+                <h3>J'OFFRE</h3>
+                <li id='offer-1'></li>
+                <li id='offer-2'></li>
+                <li id='offer-3'></li>
+            </div>
+        </div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 project">
+					<div class="biographie">
+                    <br />
+                    <div id="Subtitle" class="subtitle"></div>
+                    <div class="sublocate">
+                      27 Bd des Batignolles, Paris <img src="../img/map2.png" />
+                    </div>
+                    <p id="describe"></p>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <div id="map_container"></div>
+	    <div id="map"></div>
+        <p><center>&copy; Sulman Bashir</center></p>
+    </div>
+   </div>
+ </div>
+<script>
+var firstname = window.localStorage.getItem('otheruser/first_name');
+var lastname = window.localStorage.getItem('otheruser/last_name');
+var fullname = firstname + ' ' + lastname;
+$('#fullname').append("", fullname);
+
+var offer1 = window.localStorage.getItem('keyword/offer/1');
+$('#offer-1').append("", offer1);
+
+var offer2 = window.localStorage.getItem('keyword/offer/2');
+$('#offer-2').append("", offer2);
+
+var offer3 = window.localStorage.getItem('keyword/offer/3');
+$('#offer-3').append("", offer3);
+    
+var search1 = window.localStorage.getItem('keyword/search/1');
+$('#search-1').append("", search1);
+
+var search2 = window.localStorage.getItem('keyword/search/2');
+$('#search-2').append("", search2);
+
+var search3 = window.localStorage.getItem('keyword/search/3');
+$('#search-3').append("", search3);
+
+var secteur = window.localStorage.getItem('otheruser/secteur_activite');
+var entreprise = window.localStorage.getItem('otheruser/entreprise');
+$('#Subtitle').append("", entreprise);
+$('#entreprise').append("<b>" + entreprise + "</b> - <font color='#FFFFFF'>" + secteur + '</font>');
+
+var about1 = window.localStorage.getItem('user/aboutme1');
+$('#about1').append("", about1);
+    
+var about2 = window.localStorage.getItem('user/aboutme2');
+$('#about2').append("", about2);
+    
+var about3 = window.localStorage.getItem('user/aboutme3');
+$('#about3').append("", about3);
+    
+var describe = window.localStorage.getItem('otheruser/describe');
+$('#describe').append("", describe);
+/***/
+$(document).ready(function() {
+    function initialize() {
+        var myLatlng = new google.maps.LatLng(window.localStorage.getItem('otheruser/position/latitude'),window.localStorage.getItem('otheruser/position/longitude'));
+        var imagePath = '../img/map-marker.png'
+        var mapOptions = {
+            zoom: 11,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+
+		var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+		//Callout Content
+		var contentString = window.localStorage.getItem('otheruser/first_name') + ' '+ window.localStorage.getItem('otheruser/last_name') + ' se trouve ici';
+		//Set window width + content
+		var infowindow = new google.maps.InfoWindow({
+			content: contentString,
+			maxWidth: 500
+		});
+
+		//Add Marker
+		var marker = new google.maps.Marker({
+			position: myLatlng,
+			map: map,
+			icon: imagePath,
+			title: 'image title'
+		});
+
+		google.maps.event.addListener(marker, 'click', function() {
+			infowindow.open(map,marker);
+		});
+
+		//Resize Function
+		google.maps.event.addDomListener(window, "resize", function() {
+			var center = map.getCenter();
+			google.maps.event.trigger(map, "resize");
+			map.setCenter(center);
+		});
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+
+});
+</script>
+ </body>
+</html>

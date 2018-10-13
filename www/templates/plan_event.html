@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+		<title>Activ'</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="../js/tryNetwork.js"></script>
+        <script type="text/javascript" src="../js/api_request.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+        <link rel='stylesheet' href='../css/sidemenu.css' type='text/css' media='all'>
+        <link rel="manifest" href="../manifest.json">
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700|Open+Sans:700' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+        <div id="plan_body">
+            <div class="form-style-6">
+            <h1>Planifier un évènement</h1>
+                <label>Titre de l'évènement <font color="red">*</font><div id="title_error"></div></label>
+                <input type="text" id="title" placeholder="Voyages à Taiwan"/>
+                <label>Ville d'arrivée <font color="red">*</font><div id="city_error"></div></label>
+                <input type="text" id="city" placeholder="Voyages à Taiwan"/>
+                <label>Date de départ <font color="red">*</font><div id="depart_error"></div></label>
+                <input type="date" id="depart" placeholder="Date de départ"/>
+                <label>Date de retour <font color="red">*</font><div id="retour_error"></div></label>
+                <input type="date" id="retour" placeholder="Date de fin" onchange="check_retour()"/>
+                <!--<label>Petit message ...</label><div id="message_error"></div>
+                <textarea id="message" placeholder="Taper votre message"></textarea>
+                --><input type="submit" value="Envoyer" onclick='send()'/>
+                <input type="button" value="Retour" onclick="location.href='home.html'"/>
+            </div>
+        </div>
+	</body>
+    <script type="application/javascript">
+        function check_retour() {
+            var retour = document.getElementById('retour').value;
+            console.log("retour = ", retour);
+            var depart = document.getElementById('depart').value;
+            console.log("depart = ", depart);
+            if (retour < depart) {
+                document.getElementById('depart_error').innerHTML = "<font color='red'>Mauvaise date</font>";
+                console.log('Vous devez choisir une date de retour superieur');
+            } else {
+                document.getElementById('depart_error').innerHTML = "<font color='green'>Bonne date</font>";
+                console.log('Parfait');
+            }
+        }
+        function declare_presence(title, city, depart, retour) {
+            apiRequest('POST', '/wsm/localisation/membre', {
+              mb_id: window.localStorage.getItem('user/id'),
+              ville: "NANTES",
+              date_debut: "15/08/2017",
+              date_fin: "19/08/2017"
+            }, window.localStorage.getItem('login/access_token'), function(result) {
+               // console.log('ca marche tres bien');
+            /*var parseUsers = JSON.parse(JSON.stringify(result));
+            var Users = JSON.parse(JSON.stringify(parseUsers.donnees));
+            var test = JSON.parse(JSON.stringify(Users.membre_proche));*/
+                
+            }, function (error) {
+                console.log(error);
+                console.log("error lors de la planification\n");
+        });
+        }
+        function send() {
+            var title = document.getElementById('title').value;
+            var city = document.getElementById('city').value;
+            var depart = document.getElementById('depart').value;
+            var retour = document.getElementById('retour').value;
+           // var commentaire = document.getElementById('message').value;
+            
+            if (title == '') {
+                document.getElementById('title_error').innerHTML = "<font color='red'>Aucun titre saisi</font>";
+            } else {
+                document.getElementById('title_error').innerHTML = "";
+            }
+            if (city == '') {
+                document.getElementById('city_error').innerHTML = "<font color='red'>Aucune ville saisi</font>";
+            } else {
+                document.getElementById('city_error').innerHTML = "";
+            }
+            if (depart == '') {
+                document.getElementById('depart_error').innerHTML = "<font color='red'>Aucun date saisi</font>";
+            } else {
+                console.log("departure = ", depart);
+                document.getElementById('depart_error').innerHTML = "";
+            }
+            if (retour == '') {
+                document.getElementById('retour_error').innerHTML = "<font color='red'>Aucun date saisi</font>";
+            } else {
+                document.getElementById('retour_error').innerHTML = "";
+            }
+            if (retour < depart) {
+                retour = '';
+            }
+            if (title != '' && depart != '' && retour != '') {
+               //window.setTimeout("location=('home.html');", 1000);
+                declare_presence(title, city, depart, retour);
+            }
+        }
+    </script>
+</html>

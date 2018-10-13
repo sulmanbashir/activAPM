@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../css/about.css">
+    </head>
+    <body>
+        <center><img src="../img/logo_apm_blanc.fw.png" height="160" width="349"/></center>
+        <form>
+            <h1>Ce que vous offrez ici</h1>
+            <div class="contentform">
+                <select id="offer-1" onchange="run1()" class="keywordSelect">
+                    <option value="Management">Management</option>
+                    <option value="Informatique">Informatique</option>
+                    <option value="Rencontre">Rencontre</option>
+                    <option value="Juridique">Juridique</option>
+                    <option value="Expatriation">Expatriation</option>
+                    <option value="Conseils">Conseils</option>
+                    <option value="Expèrience">Expèrience</option>
+                    <option value="Loisirs">Loisirs</option>
+                </select>
+                <select id="offer-2" onchange="run2()" class="keywordSelect">
+                    <option value="Management">Management</option>
+                    <option value="Informatique">Informatique</option>
+                    <option value="Rencontre">Rencontre</option>
+                    <option value="Juridique">Juridique</option>
+                    <option value="Expatriation">Expatriation</option>
+                    <option value="Conseils">Conseils</option>
+                    <option value="Expèrience">Expèrience</option>
+                    <option value="Loisirs">Loisirs</option>
+                </select>
+                <select id="offer-3" onchange="run3()" class="keywordSelect">
+                    <option value="Management">Management</option>
+                    <option value="Informatique">Informatique</option>
+                    <option value="Rencontre">Rencontre</option>
+                    <option value="Juridique">Juridique</option>
+                    <option value="Expatriation">Expatriation</option>
+                    <option value="Conseils">Conseils</option>
+                    <option value="Expèrience">Expèrience</option>
+                    <option value="Loisirs">Loisirs</option>
+                </select>
+	        </div>
+          <button type="submit" class="bouton-contact" onclick="next()">Suivant</button>
+        </form>
+        <br />
+        <center>
+            <a class="info" href="#">
+                <img src="../img/info.png" /><span>Cette page nous permet de mettre à jour votre profils.</span>
+            </a>
+        </center>
+        <script>
+           function run1() {
+                var lol = document.getElementById("offer-1").value;
+                window.localStorage.setItem('keyword/offer/1', lol);
+            }
+            function run2() {
+                var lol = document.getElementById("offer-2").value;
+                window.localStorage.setItem('keyword/offer/2', lol);
+            }
+            function run3() {
+                var lol = document.getElementById("offer-3").value;
+                window.localStorage.setItem('keyword/offer/3', lol);
+            }
+            function next() {
+                window.setTimeout("location=('search_keyword.html');", 3);
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+		<title>Activ'</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="../js/tryNetwork.js"></script>
+        <script type="text/javascript" src="../js/home_functions.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+        <link rel='stylesheet' href='../css/sidemenu.css' type='text/css' media='all'>
+        <link rel="manifest" href="../manifest.json">
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700|Open+Sans:700' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+        <div id="plan_body">
+            <div class="form-style-6">
+            <h1>Paramètres</h1>
+                <center><h3>A proximité de vous</h3></center>
+                <label>Rayon de recherche</label>
+                <select id="rayon_settings" onchange="initSettingRayon()">
+                        <option value="200">200 m</option>
+                        <option value="1000">1 km</option>
+                        <option value="5000">5 km</option>
+                        <option value="10000">10 km</option>
+                        <option value="15000">15 km</option>
+                        <option value="20000">20 km</option>
+                </select>
+                <center><h3>Recherche par..</h3></center>
+                <label>Secteur d'activités</label>
+                <select id="search-1" class="keywordSelect">
+                    <option value="Management">Management</option>
+                    <option value="Informatique">Informatique</option>
+                    <option value="Rencontre">Rencontre</option>
+                    <option value="Juridique">Juridique</option>
+                    <option value="Expatriation">Expatriation</option>
+                    <option value="Conseils">Conseils</option>
+                    <option value="Expèrience">Expèrience</option>
+                    <option value="Loisirs">Loisirs</option>
+                </select>
+                <label>Compétence</label>
+                <select id="search-1" class="keywordSelect">
+                    <option value="Management">Management</option>
+                    <option value="Informatique">Informatique</option>
+                    <option value="Rencontre">Rencontre</option>
+                    <option value="Juridique">Juridique</option>
+                    <option value="Expatriation">Expatriation</option>
+                    <option value="Conseils">Conseils</option>
+                    <option value="Expèrience">Expèrience</option>
+                    <option value="Loisirs">Loisirs</option>
+                </select>
+                <center><h3>Ma position</h3></center>
+                <label>Me rendre visible</label><br />
+                <input type= "radio" name="tarif" value="jour" />visible
+                <input type= "radio" name="tarif" value="nuit" />incognito
+                <input type="button" value="Retour" onclick="location.href='home.html'"/>
+            </div>
+        </div>
+	</body>
+    <script>
+        function send() {
+            
+        }
+        function initSettingRayon() {
+            console.log("init");
+            var rayon = document.getElementById("rayon_settings").value;
+            document.getElementById.value = "rayon";
+            window.localStorage.setItem('user/position/rayon', rayon);
+        }        
+    </script>
+</html>

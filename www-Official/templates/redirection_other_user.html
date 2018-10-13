@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <link rel="manifest" href="../manifest.json">
+    <link href="../css/redirect.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script>
+        $.ajax({
+           type: 'GET',
+           async: true,
+           crossDomain: true,
+           url: "https://recette.apm.fr/rencontres/wsm/utilisateur_profil/" + window.localStorage.getItem('otheruser/id'),
+           processData: true,
+           headers: {
+            "authorization": "Basic YXBtdXNlcjpzMWQwbmlFKg==",
+            "cache-control": "no-cache",
+          },
+           data: {token: window.localStorage.getItem('login/access_token')},
+           dataType: "json",
+           success: function (data) {
+               var reponse = JSON.stringify(data);
+               var p = JSON.parse(reponse);
+               /*var t = JSON.stringify(p.donnees.clubs);
+               console.log('t = ', p.donnees.clubs.club);
+               var l = JSON.parse(t.clubs);
+               console.log('l = ', l);*/
+               
+               console.log("id =", window.localStorage.getItem('otheruser/id'));
+               window.localStorage.setItem('otheruser/last_name', p.donnees.membre_nom);
+               window.localStorage.setItem('otheruser/first_name', p.donnees.membre_prenom);
+               window.localStorage.setItem('otheruser/photo', p.donnees.membre_photo);
+               //window.localStorage.setItem('user/age', p.donnees.age);
+               if (p.donnees.entreprise == null) {
+                window.localStorage.setItem('otheruser/entreprise', 'Non définie');
+               } else {
+                window.localStorage.setItem('otheruser/entreprise',  p.donnees.entreprise); 
+               }
+               window.localStorage.setItem('otheruser/fonction', p.donnees.fonction);//fonction
+               if (p.donnees.secteur_activite == null) {
+                window.localStorage.setItem('otheruser/secteur_activite', 'Non définie');
+               } else {
+                window.localStorage.setItem('otheruser/secteur_activite', p.donnees.secteur_activite); 
+               }
+/*a voir*/     //window.localStorage.setItem('user/telephone', p.donnees.telephone);
+/*a voir*/     //window.localStorage.setItem('user/mobile', p.donnees.mobile);
+               window.localStorage.setItem('otheruser/email', p.donnees.email);
+               //window.localStorage.setItem('user/club/name', p.donnees.clubs.club);
+               //window.localStorage.setItem('user/club/longitude', p.donnees.clubs.longitude);
+               //window.localStorage.setItem('user/club/latitude', p.donnees.clubs.latitude);
+               if (p.donnees.entreprise_description == "" || p.donnees.entreprise_description == null) {
+                window.localStorage.setItem('otheruser/describe', 'Aucune description');
+               } else {
+                window.localStorage.setItem('otheruser/describe', p.donnees.entreprise_description); 
+               }
+           }
+        });
+       window.setTimeout("location=('other_user_profils.html');", 3000);
+    </script>
+  </head>
+  <body>
+    <div class="loader">Chargement..</div>
+    <!--<div id="show-data"></div>-->
+  </body>
+</html>
